@@ -7,7 +7,7 @@ import datetime
 
 
 class firebase(object):
-    def __init__(self):
+    def __init__(self, username, password):
         config = {
             "apiKey": "AIzaSyBubZ6XTgOPmKPt8tbkdgtW_XGvgvwU6ho",
             "authDomain": "dynamowombatapp.firebaseapp.com",
@@ -21,20 +21,45 @@ class firebase(object):
         firebase = pyrebase.initialize_app(config)
         self.auth = firebase.auth()
         self.firedb = firebase.database()
+        self.user = username
+        self.passwd = password
 
-    def create_user(self, username, password):
+    def add_players(self):
+        self.firedb.child('wombatapp').child('players').update({'current': False,
+                                                                 'firstname': 'Tom',
+                                                                 'surname': 'Lowe',
+                                                                 'id': 2,
+                                                                 'nickname': 'Fingers'})
+
+    def user_info(self):
+        try:
+            logger.info(self.auth.get_account_info(self.user['idToken']))
+        except Exception as err:
+            logger.error(err)
+
+    def login_user(self):
+        try:
+            self.user = self.auth.sign_in_with_email_and_password(self.user, self.passwd)
+            logger.info("User successfully logged in %s", self.user['email'])
+            self.user_info()
+        except Exception as err:
+            logger.error(err)
+
+    def create_user(self):
         # Creating user
         logger.info("Creating new user")
         try:
-            self.auth.create_user_with_email_and_password(username, password)
-            logger.info("New user created %s", username)
+            self.auth.create_user_with_email_and_password(self.user, self.passwd)
+            logger.info("New user created %s", self.user)
+
         except Exception as err:
             logger.error("errrrrror: %s", err)
 
 
 def main():
-    firebase().create_user("ash@hot.com", "123456")
-
+    # firebase("ash@hot.com", "123456").create_user()
+    # firebase("ash@hot.com", "123456").login_user()
+    firebase("ash@hot.com", "123456").add_players()
 
 if __name__ =='__main__':
 
