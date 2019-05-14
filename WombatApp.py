@@ -9,13 +9,13 @@ import datetime
 class firebase(object):
     def __init__(self, username, password):
         config = {
-            "apiKey": "AIzaSyBubZ6XTgOPmKPt8tbkdgtW_XGvgvwU6ho",
-            "authDomain": "dynamowombatapp.firebaseapp.com",
-            "databaseURL": "https://dynamowombatapp.firebaseio.com",
-            "projectId": "dynamowombatapp",
-            "storageBucket": "dynamowombatapp.appspot.com",
-            "messagingSenderId": "294522566163",
-            "appId": "1:294522566163:web:7b4f0ff6ae668121"
+            "apiKey": "AIzaSyDRMsON2W4er5uoRUv6uNFomGoMYSSzunQ",
+            "authDomain": "dynamowombat.firebaseapp.com",
+            "databaseURL": "https://dynamowombat.firebaseio.com",
+            "projectId": "dynamowombat",
+            "storageBucket": "dynamowombat.appspot.com",
+            "messagingSenderId": "144243236824",
+            "appId": "1:144243236824:web:97ed615943650343"
         }
 
         firebase = pyrebase.initialize_app(config)
@@ -25,7 +25,7 @@ class firebase(object):
         self.passwd = password
 
     def add_players(self):
-        self.firedb.child('wombatapp').child('players').update({'current': False,
+        self.firedb.child('sportfixladder').push({'current': False,
                                                                  'firstname': 'Tom',
                                                                  'surname': 'Lowe',
                                                                  'id': 2,

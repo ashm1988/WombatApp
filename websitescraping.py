@@ -38,11 +38,13 @@ class ScrapeSportFix(object):
 
     def scrape_league_table(self):
         # URL of the league table page
-        url = 'https://sportfix.net/app/competition.aspx?sportFixId=73d44dd0-e1a8-48ca-aaa2-990ba84ea886&sp=613&div=2741&sea=495'
+        url = 'https://sportfix.net/app/competition.aspx?sportFixId=73d44dd0' \
+              '-e1a8-48ca-aaa2-990ba84ea886&sp=613&div=2741&sea=495'
         # Use the URL and pass to function to get the page data
         soup = self.get_page_response(url)
 
-        # parse the date and compare it to the database update time to check if the table needs to be scraped
+        # parse the table update time and compare it to the database update time
+        # to check if the table needs to be scraped
         lutime = soup.find(id="MainContent_lblLadderLastMod")
         lutime = lutime.text.split()
         del lutime[0:3]
