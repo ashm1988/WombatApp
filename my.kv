@@ -1,14 +1,35 @@
-<Button>:
-    font_size:40
-    color: 0.3, 0.1, 0.4, 1
-    size_hint: 0.3, 0.5
+WindowManager:
+    MainWindow:
+    SecondWindow:
 
-<FloatLayout>:
-    Button:
-        pos_hint: {"x":0.5, "top":1}
-        text: "Ash"
-    Button:
-        id: btn
-        text: "is Awesome" if btn.state == "normal" else "Down"
+<MainWindow>:
+    name: "main"
 
+    GridLayout:
+        cols: 1
+
+        GridLayout:
+            cols: 2
+
+            Label:
+                text: "Password: "
+
+            TextInput:
+                id: passwd
+                multiline: False
+
+        Button:
+            text: "Submit"
+            on_release:
+                app.root.current = "second" if passwd.text == "Ash" else "main"
+                root.manager.transition.direction = "left"
+
+<SecondWindow>:
+    name: "second"
+
+    Button:
+        text: "Go Back"
+        on_release:
+            app.root.current = "main"
+            root.manager.transition.direction = "right"
 
